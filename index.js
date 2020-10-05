@@ -76,7 +76,7 @@ client.connect(err => {
   app.delete('/delete/:id',(req, res) =>{
     activitiesCollection.deleteOne({_id : ObjectId(req.params.id)})
     .then(result =>{
-      // res.redirect('/activities')
+      
       res.send(result.deletedCount >0);
 
     })
@@ -88,4 +88,4 @@ app.get('/', (req, res) => {
     res.send('Hello from volunteer')
   })
 
-  app.listen(port)
+  app.listen(process.env.PORT||port)
