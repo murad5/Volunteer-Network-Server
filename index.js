@@ -24,11 +24,9 @@ client.connect(err => {
     
   app.post('/addEvent', (req, res) => {
     const newEvent = req.body;
-    console.log(newEvent)
     eventsCollection.insertOne(newEvent)
     .then(result => {
-    
-       res.send(result.insertedCount)
+       res.send(result.insertedCount>0)
     })
   })
 
