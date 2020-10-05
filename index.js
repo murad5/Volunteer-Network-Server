@@ -22,13 +22,13 @@ client.connect(err => {
   const activitiesCollection = client.db("volunteerNetwork").collection("activities");
   
     
-  app.post('/addEvents', (req, res) => {
-    const events = req.body;
-  
-    eventsCollection.insertMany(events)
+  app.post('/addEvent', (req, res) => {
+    const newEvent = req.body;
+    console.log(newEvent)
+    eventsCollection.insertOne(newEvent)
     .then(result => {
-      console.log(result.insertCount)
-      res.send(result.insertCount)
+      console.log(result.insertedCount)
+       res.send(result.insertCount)
     })
   })
 
@@ -66,7 +66,13 @@ client.connect(err => {
       res.send(documents);
     })
   })
-
+  
+  app.get('/admin/activities', (req, res) => {
+    activitiesCollection.find({})
+    .toArray((err, documents)=>{
+      res.send(documents);
+    })
+  })
   app.delete('/delete/:id',(req, res) =>{
     activitiesCollection.deleteOne({_id : ObjectId(req.params.id)})
     .then(result =>{
