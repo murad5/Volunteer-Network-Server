@@ -27,8 +27,8 @@ client.connect(err => {
     console.log(newEvent)
     eventsCollection.insertOne(newEvent)
     .then(result => {
-      console.log(result.insertedCount)
-       res.send(result.insertCount)
+    
+       res.send(result.insertedCount)
     })
   })
 
