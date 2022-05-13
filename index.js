@@ -13,15 +13,14 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true  });
 client.connect(err => {
   const eventsCollection = client.db("volunteerNetwork").collection("events");
   const activitiesCollection = client.db("volunteerNetwork").collection("activities");
-  
-    
+ 
   app.post('/addEvent', (req, res) => {
     const newEvent = req.body;
     eventsCollection.insertOne(newEvent)
@@ -38,7 +37,7 @@ client.connect(err => {
   })
 
 
-  app.get('/event/:id', (req, res) => {
+  app.get('/event/:id',(req, res) => {
 
     eventsCollection.find({_id: ObjectId(req.params.id)})
     .toArray( (err, documents) => {
